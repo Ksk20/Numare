@@ -24,7 +24,7 @@ class Customers::BooksController < ApplicationController
 
   def search
     @tag_lists = Tag.all
-    @books = Book.search(params[:keyword])
+    @books = Book.search(params[:keyword]).page(params[:page]).per(10)
     @keyword = params[:keyword]
     render "index"
   end
