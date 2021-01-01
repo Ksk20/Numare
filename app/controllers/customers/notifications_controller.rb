@@ -1,4 +1,5 @@
 class Customers::NotificationsController < ApplicationController
+  before_action :authenticate_customer!, only: [:index,:destroy]
 	def index
 		#current_customerの投稿に紐づいた通知一覧
 		@notifications = current_customer.passive_notifications
