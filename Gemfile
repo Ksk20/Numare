@@ -76,7 +76,7 @@ gem 'pry-byebug'
 gem "refile-s3"
 gem 'dotenv-rails'
 gem 'devise-i18n'
-# gem 'devise-i18n-views'
+gem "bullet"
 group :production do
   gem 'mysql2'
 end
