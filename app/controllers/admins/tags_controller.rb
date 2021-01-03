@@ -2,8 +2,8 @@ class Admins::TagsController < ApplicationController
 before_action :authenticate_admin!
 
   def index
-	@tags = Tag.all
-	@tag = Tag.new
+	  @tags = Tag.all
+	  @tag = Tag.new
   end
 
   def edit

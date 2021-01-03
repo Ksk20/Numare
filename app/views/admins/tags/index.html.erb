@@ -1,19 +1,7 @@
 <div class="container">
   <div class="row">
     <div class="col-lg-8 col-lg-offset-2">
-      <h4>　タグ一覧・追加　</h4>
-      <%= form_with(model: @tag, url: '/admins/tags', local: true) do |f| %>
-        <div class="form" >
-          <%= f.label :name, "タグ" %>
-          <%= f.text_field :name %>
-          <%= f.radio_button :is_effective, :true %>
-          <%= f.label :is_effective, "有効", {value: true} %>
-          <%= f.radio_button :is_effective, :false %>
-          <%= f.label :is_effective, "無効", {value: false} %>
-          <%= f.submit "追加", class: "btn btn-primary" %>
-        </div>
-      <% end %>
-
+      <h4><mark>タグ一覧</mark></h4>
       <table class="table" style="border: 1px solid #696969; width: 400px">
         <thead>
           <tr class="active">
@@ -33,6 +21,6 @@
           <% end %>
         </tbody>
       </table>
-	  </div>
+    </div>
   </div>
 </div>

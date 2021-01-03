@@ -1,26 +1,26 @@
 class Customers::BooksController < ApplicationController
-	before_action :authenticate_customer!, only: [:new,:create, :edit, :update, :destroy]
+  before_action :authenticate_customer!, only: [:new,:create, :edit, :update, :destroy]
   before_action :correct_customer, only: [:edit, :update, :destroy]
 
-	def new
+  def new
     @person = Person.find(params[:person_id])
-		@book = Book.new
+    @book = Book.new
       respond_to do |format|
         format.html
         format.json
       end
-	end
+  end
 
-	def index
+  def index
     if params[:tag_id].present?
       @tag = Tag.find(params[:tag_id])
       books = @tag.books.order(created_at: :desc)
     else
       books = Book.all.order(created_at: :desc)
     end
-    @tag_lists = Tag.all
+    @tag_lists = Tag.where(is_effective: "true")
     @books = Kaminari.paginate_array(books).page(params[:page]).per(10)
-	end
+  end
 
   def search
     @tag_lists = Tag.all
@@ -29,19 +29,19 @@ class Customers::BooksController < ApplicationController
     render "index"
   end
 
-	def create
-		person = Person.find(params[:person_id])
-    	@book = Book.new(book_params)
-    	@book[:person_id] = person.id
-    	@book[:customer_id] = current_customer.id
+  def create
+    person = Person.find(params[:person_id])
+      @book = Book.new(book_params)
+      @book[:person_id] = person.id
+      @book[:customer_id] = current_customer.id
       tag_list = params[:book][:name].split(nil)
-    	if @book.save
+      if @book.save
          @book.save_tag(tag_list)
          flash[:notice] = "新しく本を登録しました！"
-    	   redirect_to person_path(person.id)
-    	else
-    		render "new"
-    	end
+         redirect_to person_path(person.id)
+      else
+        render "new"
+      end
   end
 
   def edit
@@ -62,7 +62,7 @@ class Customers::BooksController < ApplicationController
       end
   end
 
-	def destroy
+  def destroy
      @book = Book.find(params[:id])
      @book.destroy
      if params[:customer_id].present?
@@ -73,12 +73,12 @@ class Customers::BooksController < ApplicationController
       redirect_to person_path(params[:person_id])
       return
      end
-	end
+  end
 
 private
-	def book_params
-    	params.require(:book).permit(:title,:caption,:image_url,:person_id,:customer_id,:grade,:scribble)
-  	end
+  def book_params
+      params.require(:book).permit(:title,:caption,:image_url,:person_id,:customer_id,:grade,:scribble)
+    end
   def correct_customer
    @book = current_customer.books.find_by(id: params[:id])
     unless @book
