@@ -34,7 +34,9 @@
             <h1 style= "margin-top: -10px"><strong><%= @person.name    %></strong></h1>
           </td>
           <td style="padding-top: 50px; padding-left: 8px">
-            <p>【生没】(<%= @person.birth %>〜<%= @person.death %>)</p>
+            <% if @person.birth? || @person.death? %>
+              <p>【生没】(<%= @person.birth %>〜<%= @person.death %>)</p>
+            <% end %>
           </td>
         </tr>
       </table>
